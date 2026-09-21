@@ -37,3 +37,5 @@ flutter build apk --release --dart-define=API_BASE_URL=https://your-domain.examp
 The APK is written to `build/app/outputs/flutter-apk/app-release.apk`.
 
 The backend currently returns an in-memory bearer token rather than a signed JWT. The client persists that returned token in `SharedPreferences` and sends it as `Authorization: Bearer <token>` on authenticated requests.
+
+
