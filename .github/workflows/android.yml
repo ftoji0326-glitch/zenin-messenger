@@ -3,8 +3,7 @@ name: Build Android APK
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build:
@@ -20,10 +19,13 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: "3.47.5"
+          cache: true
 
       - name: Create local.properties
-        run: |
-          echo "flutter.sdk=$FLUTTER_ROOT" > android/local.properties
+        run: echo "flutter.sdk=$FLUTTER_ROOT" > android/local.properties
+
+      - name: Precache Flutter Android artifacts
+        run: flutter precache --android
 
       - name: Flutter doctor
         run: flutter doctor -v
