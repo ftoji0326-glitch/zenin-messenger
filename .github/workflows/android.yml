@@ -3,7 +3,8 @@ name: Build Android APK
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
@@ -20,9 +21,18 @@ jobs:
         with:
           flutter-version: "3.47.5"
 
-      - run: flutter pub get
+      - name: Create local.properties
+        run: |
+          echo "flutter.sdk=$FLUTTER_ROOT" > android/local.properties
 
-      - run: flutter build apk --debug
+      - name: Flutter doctor
+        run: flutter doctor -v
+
+      - name: Get packages
+        run: flutter pub get
+
+      - name: Build APK
+        run: flutter build apk --debug
 
       - uses: actions/upload-artifact@v4
         with:
